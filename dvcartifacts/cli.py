@@ -93,11 +93,10 @@ def main():
     parser.add_argument('repourl', type=str, help='url of the GitHub repository associated with the artifact')
     parser.add_argument('projectdir', type=str, help='project subdirectory in the monorepo where the artifact was created')
     parser.add_argument('artifact_name', type=str, help='Name of the artifact to find')
-    parser.add_argument('-r', '--rev', type=str, help='GTO tag of the artifact (optional)', default=None)
+    parser.add_argument('-r', '--rev', type=str, help='semantic version of the artifact (optional), latest version is used if this is not specified', default=None)
 
 
     args = vars(parser.parse_args())
-    print(args)
     download_artifact(**args)
 
 
