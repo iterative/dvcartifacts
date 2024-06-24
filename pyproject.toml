@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dvcartifact"
+version = "0.0.1"
+authors = [
+  { name="Tibor Mach", email="tibor@iterative.ai" },
+]
+description = "A simple CLI tool to download DVC artifacts from large monorepos"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "boto3",
+    "google-cloud-storage",
+    "gitPython",
+]
+keywords = ["dvc", "artifacts"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+license = {file = "LICENSE"}
+
+[project.scripts]
+dvcartifacts = "dvcartifacts:main"
+
+[project.urls]
+Homepage = "https://github.com/iterative/artifact-get-no-clone"
+Issues = "https://github.com/iterative/artifact-get-no-clone/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
