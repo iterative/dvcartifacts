@@ -1,4 +1,4 @@
-name: Test CLI Tool on macos
+name: Test CLI Tool
 
 on:
   push:
@@ -9,8 +9,29 @@ on:
       - main
 
 jobs:
-  run-cli:
+  run-cli-macos:
     runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'  # Specify the Python version you need
+
+      - name: Install CLI Tool
+        run: |
+          python -m pip install --upgrade pip
+          pip install dvcartifacts
+
+      - name: Run CLI Tool
+        run: |
+          dvcartifacts -h
+
+  run-cli-ubuntu:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository

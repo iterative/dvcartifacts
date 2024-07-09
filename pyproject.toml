@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dvcartifacts"
-version = "0.0.1"
+version = "0.0.2"
 authors = [{ name="Tibor Mach", email="tibor@iterative.ai" }]
 license = {file = "LICENSE"}
 readme = "README.md"
