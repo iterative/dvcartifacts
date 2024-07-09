@@ -48,5 +48,5 @@ positional arguments:
 
 options:
   -h, --help         show this help message and exit
-  -r REV, --rev REV  GTO tag of the artifact (optional)
+  -r REV, --rev REV  semantic version of the artifact (optional), latest version is used if this is not specified
 ```

@@ -66,7 +66,7 @@ def download_artifact(repourl, projectdir, artifact_name, rev=None):
 
     artifact_path = find_artifact_path(dvcyaml, artifact_name)
     md5 = find_md5_for_path(dvclock, artifact_path)
-    remoteurl = dvcconfig[f'\'remote "{dvcconfig['core'].get('remote')}"\''].get('url')
+    remoteurl = dvcconfig[f"""'remote "{dvcconfig['core'].get('remote')}"'"""].get('url')
 
     # TODO: handle the situation where the remote is a subdirectory in the bucket
     storage = remoteurl.split('://')[0]
