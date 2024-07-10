@@ -1,15 +1,31 @@
 import argparse
 from git import Repo
 
-def find_md5_for_path(dvclock, artifact_path):
+def find_md5_for_path(projectdir, artifact_path):
     """
-    searches the content of dvc.lock for the md5 has of a given artifact path
+    searches the content of dvc.lock or the `[artifact_path].dvc` file for the md5 has of a given artifact path
     """
-    for stage in dvclock.get('stages', {}).values():
-        for entry in stage.get('outs', []) + stage.get('deps', []):
-            if entry.get('path') == artifact_path:
-                return entry.get('md5')
-    return None
+    import yaml
+    from pathlib import Path
+
+    try:
+        dvclock = yaml.safe_load(open(Path(projectdir)/'dvc.lock'))
+
+        for stage in dvclock.get('stages', {}).values():
+            for entry in stage.get('outs', []) + stage.get('deps', []):
+                if entry.get('path') == artifact_path:
+                    return entry.get('md5')
+
+    except FileNotFoundError:
+
+        dvcfile = yaml.safe_load(open(Path(projectdir)/f'{artifact_path}.dvc'))
+
+        for entry in dvcfile.get('outs', []):
+                if entry.get('path') == artifact_path:
+                    return entry.get('md5')
+
+        raise ValueError(f"There seems to be no DVC-versioned file with the path {artifact_path}.")
+
 
 def find_artifact_path(dvcyaml, artifact_name):
     artifacts = dvcyaml.get('artifacts', {})
