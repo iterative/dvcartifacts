@@ -73,15 +73,15 @@ def download_artifact(repourl, projectdir, artifact_name, rev=None):
         repo.git.sparse_checkout('set', projectdir)
 
         dvcyaml = yaml.safe_load(open(Path(projectdir)/'dvc.yaml'))
-        dvclock = yaml.safe_load(open(Path(projectdir)/'dvc.lock'))
+        artifact_path = find_artifact_path(dvcyaml, artifact_name)
+
+        md5 = find_md5_for_path(projectdir, artifact_path)
 
         dvcconfig = configparser.ConfigParser()
         dvcconfig.read(str(Path(projectdir)/'.dvc'/'config'))
 
     os.chdir(original_dir)
 
-    artifact_path = find_artifact_path(dvcyaml, artifact_name)
-    md5 = find_md5_for_path(dvclock, artifact_path)
     remoteurl = dvcconfig[f"""'remote "{dvcconfig['core'].get('remote')}"'"""].get('url')
 
     # TODO: handle the situation where the remote is a subdirectory in the bucket
